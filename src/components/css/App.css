@@ -24,11 +24,12 @@ body {
     margin: 10px 0px;
 }
 .notes__title {
-    color: #fff;
+    color: #ffffff;
     font-size: 38px;
     font-family: "Montserrat";
     font-weight: 400;
 }
+
 .notes {
     max-width: 1200px;
     margin: 0 auto;
