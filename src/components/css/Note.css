@@ -1,16 +1,20 @@
 .note {
-  background: #fccb00;
+  background: #fef3bd;
   color: #131313;
   backdrop-filter: blur(5px);
-  box-shadow: inset -6px -4px 2px #ffffff08;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   border-radius: 15px;
-  border: 1.5px solid #ffffff53;
   padding: 15px;
   min-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.note.new {
+  background-color: #c1e1c5 !important;
 }
 
 .note__footer {
@@ -18,36 +22,40 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
-  color: #fff;
+  color: #131313;
 }
+
 .note textarea {
   white-space: pre-wrap;
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: #131313;
   resize: none;
   font-size: 18px;
 }
+
 .note textarea:focus {
   outline: none;
 }
+
 .note textarea::placeholder {
-  color: #fff;
+  color: #131313;
 }
+
 .note__save {
-  background: transparent;
+  background-color: rgb(201, 201, 201);
   transition: 0.1s ease-in-out;
-  border: 1.5px solid #fff;
   border-radius: 10px;
-  color: #fff;
+  border: none;
+  color: #131313;
   padding: 4px 10px;
   font-size: 13px;
   cursor: pointer;
 }
+
 .note__save:hover {
-  background: #fff;
-  border: 1.5px solid #fff;
-  color: #4b1589;
+  background: gray;
+  color: #ffffff;
 }
 
 .note__buttons:hover {
