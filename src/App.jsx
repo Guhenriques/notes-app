@@ -16,7 +16,7 @@ function App() {
   };
 
   return (
-    <div className={darkMode ? "dark-mode" : ""}>
+    <div className={darkMode ? "dark-mode" : "white-mode"}>
       <Header onDarkModeToggle={handleDarkModeToggle} />
       <main id="app">
         <BrowserRouter>

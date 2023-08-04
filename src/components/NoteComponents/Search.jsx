@@ -8,7 +8,7 @@ const Search = ({ handleSearchNote }) => {
       <SearchIcon className="search-icons" size="1.3rem" />
       <input 
         onChange={(e) => handleSearchNote(e.target.value)} type="text" 
-        placeholder="type to search..." 
+        placeholder="Search..." 
       />
     </div>
   )
