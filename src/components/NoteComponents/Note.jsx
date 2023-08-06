@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { GithubPicker } from "react-color";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
 
 const Note = ({ id, text, deleteNote }) => {
-  const [bgColor, setBgColor] = useState("");
+  const defaultColor = "#fef3bd";
+  const [bgColor, setBgColor] = useState(() => {
+    return localStorage.getItem(`note_${id}_color`) || defaultColor;
+  });
   const [showColorPicker, setShowColorPicker] = useState(false);
 
   const handleChangeColor = (color) => {
@@ -28,6 +30,10 @@ const Note = ({ id, text, deleteNote }) => {
     "#abb8c3",
     "#969696",
   ];
+
+  useEffect(() => {
+    localStorage.setItem(`note_${id}_color`, bgColor);
+  }, [id, bgColor]);
 
   return (
       <div className="note" style={{ background: bgColor }}>

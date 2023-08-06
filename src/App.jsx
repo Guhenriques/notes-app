@@ -22,7 +22,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Notes />} />
-            <Route path="/create-note" element={<CreateNote />} />
+            {/*<Route path="/create-note" element={<CreateNote />} /> */}
             {/*<Route path="/edit-note/:id" element={<Notes />} />*/}
           </Routes>
         </BrowserRouter>
