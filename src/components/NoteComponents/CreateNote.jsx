@@ -11,7 +11,7 @@ function CreateNote({ textHandler, saveHandler, inputText }) {
         value={inputText}
         placeholder="Type to add a note..."
         onChange={textHandler}
-        maxLength="250"
+        maxLength={charLimit}
       ></textarea>
       <div className="note__footer">
         <span className="label">{charLeft} char left</span>
