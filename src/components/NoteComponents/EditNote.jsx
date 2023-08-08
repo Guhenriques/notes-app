@@ -1,26 +1,30 @@
-import { Link } from "react-router-dom";
+import React from "react";
 
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { ArrowBack } from "@mui/icons-material";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+function EditNote({ textHandler, saveHandler, inputText, setInputText, handleCancelEdit }) {
+  const charLimit = 250;
+  const charLeft = charLimit - (inputText ? inputText.length : 0); // Check if inputText is not null or undefined
 
-
-const EditNote = () => {
   return (
-    <section>
-      <header className="create-note__header">
-        <Link to="/" className="btn"><ArrowBack/></Link>
-        <button className="btn lg-primary">Save</button>
-        <button className="btn danger"><DeleteForeverOutlinedIcon/></button>
-
-      </header>
-
-      <form className="create-note__form">
-        <input type="text" placeholder="Title" autoFocus/>
-        <textarea rows="28" placeholder="Note details..."></textarea>
-      </form>
-    </section>
-  )
+    <div className="note">
+      <textarea
+        cols="10"
+        rows="8"
+        value={inputText}
+        onChange={textHandler}
+        placeholder="Type to edit the note..."
+        maxLength={charLimit}
+      ></textarea>
+      <div className="note__footer">
+        <span className="label">{charLeft} char left</span>
+        <button className="note__save" onClick={() => saveHandler(inputText)}>
+          Save Changes
+        </button>
+        <button className="note__save" onClick={handleCancelEdit}>
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default EditNote;
