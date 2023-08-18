@@ -6,56 +6,43 @@ import CreateNote from "./CreateNote";
 import Search from "./Search";
 
 
-function Notes() {
+const Notes = ( {notes, setNotes} ) => {
   // states
-  const [notes, setNotes] = useState([]);
   const [inputText, setInputText] = useState("");
   const [searchText, setSearchText] = useState("");
-
 
   // get text and store in state
   const textHandler = (e) => {
     setInputText(e.target.value);
   };
 
-  // add new note to the state array
-  const saveHandler = () => {
+  // Create note function
+  const createNote = () => {
     if (inputText.trim().length > 0) {
-      setNotes((prevState) => [
-        ...prevState,
+      setNotes((prevNotes) => [
+        ...prevNotes,
         {
           id: uuid(),
           text: inputText,
         },
       ]);
-      // clear the textarea
-      setInputText("");
+      setInputText(""); // Clear the textarea
     }
   };
 
-  // delete note function
+  // Delete note function
   const deleteNote = (id) => {
     const filteredNotes = notes.filter((note) => note.id !== id);
     setNotes(filteredNotes);
   };
 
-  //get the saved notes and add them to the array
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("Notes"));
-    if (data && data.length > 0) {
-      setNotes(data);
-    }
-  }, []);
-
-  //saving data to local storage
-  useEffect(() => {
-    localStorage.setItem("Notes", JSON.stringify(notes));
-  }, [notes]);
-
   // Filter notes based on search text
-  const filteredNotes = notes.filter((note) =>
+  const filteredNotes = notes
+   ? notes.filter((note) =>
     note.text.toLowerCase().includes(searchText.toLowerCase())
-  );
+  )
+
+  : [];
 
   return (
     <div className="container">
@@ -67,13 +54,26 @@ function Notes() {
             id={note.id}
             text={note.text}
             deleteNote={deleteNote}
+          //onEditNote={editHandler}
           />
         ))}
         <CreateNote
           textHandler={textHandler}
-          saveHandler={saveHandler}
+          saveHandler={createNote}
           inputText={inputText}
         />
+
+        {/*
+        {editingNoteId && (
+          <EditNote
+            textHandler={textHandler} // Pass the textHandler function from the Notes component
+            saveHandler={handleSaveChanges}
+            inputText={inputText}
+            setInputText={setInputText} // Pass the setInputText function
+            handleCancelEdit={() => setEditingNoteId("")}
+          />
+        )} */}
+
       </div>
     </div>
   );

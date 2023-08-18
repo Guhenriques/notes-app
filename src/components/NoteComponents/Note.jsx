@@ -3,6 +3,7 @@ import { GithubPicker } from "react-color";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
 
+
 const Note = ({ id, text, deleteNote }) => {
   const defaultColor = "#fef3bd";
   const [bgColor, setBgColor] = useState(() => {
@@ -31,39 +32,33 @@ const Note = ({ id, text, deleteNote }) => {
     "#969696",
   ];
 
+  // storing the bgColor in localStorage
   useEffect(() => {
     localStorage.setItem(`note_${id}_color`, bgColor);
   }, [id, bgColor]);
 
   return (
-      <div className="note" style={{ background: bgColor }}>
-        <div className="note__body">{text}</div>
-        <div className="note__footer" style={{ justifyContent: "flex-end" }}>
-          <DeleteForeverOutlinedIcon
-            className="note__buttons"
-            onClick={() => deleteNote(id)}
-            aria-hidden="true"
-            fontSize="medium"
-          ></DeleteForeverOutlinedIcon>
-
-          {showColorPicker && (
-            <GithubPicker
-              color={bgColor}
-              onChangeComplete={handleChangeColor}
-              colors={customColors}
-            />
-          )}
-
-          <button onClick={handleColorPickerClick} className="note__buttons close-button">
-            {showColorPicker ? (
-              "X"
-            ) : (
-              <ColorLensTwoToneIcon fontSize="medium" />
-            )}
-          </button>
-
-        </div>
+    <div className="note" style={{ background: bgColor }}>
+      <div className="note__body">{text}</div>
+      <div className="note__footer" style={{ justifyContent: "flex-end" }}>
+        <DeleteForeverOutlinedIcon
+          className="note__buttons"
+          onClick={() => deleteNote(id)}
+          aria-hidden="true"
+          fontSize="medium"
+        />
+        {showColorPicker && (
+          <GithubPicker
+            color={bgColor}
+            onChangeComplete={handleChangeColor}
+            colors={customColors}
+          />
+        )}
+        <button onClick={handleColorPickerClick} className="note__buttons close-button">
+          {showColorPicker ? "X" : <ColorLensTwoToneIcon fontSize="medium" />}
+        </button>
       </div>
+    </div>
   );
 };
 

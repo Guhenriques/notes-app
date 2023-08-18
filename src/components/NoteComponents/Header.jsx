@@ -1,7 +1,7 @@
 import React from "react";
 import DarkModeToggle from "./DarkModeToggle";
 
-function Header({ darkMode, onDarkModeToggle }) {
+const Header = ({ darkMode, onDarkModeToggle }) => {
   return (
     <header>
       <div className="header-nav">

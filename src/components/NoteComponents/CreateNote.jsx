@@ -1,6 +1,6 @@
 import React from "react";
 
-function CreateNote({ textHandler, saveHandler, inputText }) {
+const CreateNote = ({ textHandler, saveHandler, inputText }) => {
   const charLimit = 250;
   const charLeft = charLimit - inputText.length;
   return (

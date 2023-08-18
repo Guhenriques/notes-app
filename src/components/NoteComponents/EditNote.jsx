@@ -1,6 +1,6 @@
 import React from "react";
 
-function EditNote({ textHandler, saveHandler, inputText, setInputText, handleCancelEdit }) {
+const EditNote = ({ textHandler, saveHandler, inputText, setInputText, handleCancelEdit }) => {
   const charLimit = 250;
   const charLeft = charLimit - (inputText ? inputText.length : 0); // Check if inputText is not null or undefined
 
