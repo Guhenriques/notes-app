@@ -54,7 +54,12 @@ const Note = ({ id, text, deleteNote, editNote }) => {
           {showColorPicker ? "X" : <ColorLensTwoToneIcon fontSize="medium" />}
         </button>
 
-
+        <EditIcon
+          className="note_buttons"
+          onClick={() => editNote(id)}
+          aria-hidden="true"
+          fontSize="medium"
+        />
 
         <DeleteForeverOutlinedIcon
           className="note__buttons"
