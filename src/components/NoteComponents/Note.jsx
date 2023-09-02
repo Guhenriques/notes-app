@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { GithubPicker } from "react-color";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
+import EditIcon from '@mui/icons-material/Edit';
 
 
-const Note = ({ id, text, deleteNote }) => {
+const Note = ({ id, text, deleteNote, editNote }) => {
   const defaultColor = "#fef3bd";
   const [bgColor, setBgColor] = useState(() => {
     return localStorage.getItem(`note_${id}_color`) || defaultColor;
@@ -40,13 +41,7 @@ const Note = ({ id, text, deleteNote }) => {
   return (
     <div className="note" style={{ background: bgColor }}>
       <div className="note__body">{text}</div>
-      <div className="note__footer" style={{ justifyContent: "flex-end" }}>
-        <DeleteForeverOutlinedIcon
-          className="note__buttons"
-          onClick={() => deleteNote(id)}
-          aria-hidden="true"
-          fontSize="medium"
-        />
+      <div className="note__footer">
         {showColorPicker && (
           <GithubPicker
             color={bgColor}
@@ -54,9 +49,19 @@ const Note = ({ id, text, deleteNote }) => {
             colors={customColors}
           />
         )}
+
         <button onClick={handleColorPickerClick} className="note__buttons close-button">
           {showColorPicker ? "X" : <ColorLensTwoToneIcon fontSize="medium" />}
         </button>
+
+
+
+        <DeleteForeverOutlinedIcon
+          className="note__buttons"
+          onClick={() => deleteNote(id)}
+          aria-hidden="true"
+          fontSize="medium"
+        />
       </div>
     </div>
   );
