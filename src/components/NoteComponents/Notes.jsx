@@ -6,10 +6,12 @@ import CreateNote from "./CreateNote";
 import Search from "./Search";
 
 
-const Notes = ( {notes, setNotes} ) => {
+const Notes = ({ notes, setNotes }) => {
   // states
   const [inputText, setInputText] = useState("");
+  const [editText, setEditText] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [editingNoteId, setEditingNoteId] = useState(null); // Track the note being edited
 
   // get text and store in state
   const textHandler = (e) => {
@@ -36,13 +38,39 @@ const Notes = ( {notes, setNotes} ) => {
     setNotes(filteredNotes);
   };
 
+  const startEdit = (id, initialText) => {
+    setEditingNoteId(id); // Set the ID of the note being edited
+    setEditText(initialText); // Initialize the edit text with the note's text
+  };
+
+  const handleSaveChanges = () => {
+    if (editText.trim().length > 0 && editingNoteId) {
+      const updatedNotes = notes.map((note) => {
+        if (note.id === editingNoteId) {
+          return { ...note, text: editText };
+        }
+        return note;
+      });
+      setNotes(updatedNotes);
+      setEditingNoteId(null);
+      setEditText([]);
+    }
+  };
+
+  useEffect(() => {
+    const localStorageNotes = JSON.parse(localStorage.getItem("notes"));
+    if (localStorageNotes) {
+      setNotes(localStorageNotes);
+    }
+  }, []);
+
   // Filter notes based on search text
   const filteredNotes = notes
-   ? notes.filter((note) =>
-    note.text.toLowerCase().includes(searchText.toLowerCase())
-  )
+    ? notes.filter((note) =>
+      note.text.toLowerCase().includes(searchText.toLowerCase())
+    )
 
-  : [];
+    : [];
 
   return (
     <div className="container">
@@ -54,7 +82,10 @@ const Notes = ( {notes, setNotes} ) => {
             id={note.id}
             text={note.text}
             deleteNote={deleteNote}
-          //onEditNote={editHandler}
+            startEdit={startEdit} // Pass the startEdit function to begin editing
+            isEditing={editingNoteId === note.id}
+            handleSaveChanges={handleSaveChanges} // Pass the function to save changes
+
           />
         ))}
         <CreateNote
@@ -63,16 +94,6 @@ const Notes = ( {notes, setNotes} ) => {
           inputText={inputText}
         />
 
-        {/*
-        {editingNoteId && (
-          <EditNote
-            textHandler={textHandler} // Pass the textHandler function from the Notes component
-            saveHandler={handleSaveChanges}
-            inputText={inputText}
-            setInputText={setInputText} // Pass the setInputText function
-            handleCancelEdit={() => setEditingNoteId("")}
-          />
-        )} */}
 
       </div>
     </div>
