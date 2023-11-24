@@ -38,6 +38,8 @@ const Notes = ({ notes, setNotes }) => {
     setNotes(filteredNotes);
   };
 
+
+  // Enter edit mode
   const startEdit = (id, initialText) => {
     setEditingNoteId(id); // Set the ID of the note being edited
     setEditText(initialText); // Initialize the edit text with the note's text
@@ -51,6 +53,10 @@ const Notes = ({ notes, setNotes }) => {
         }
         return note;
       });
+
+      console.log("Editing Note ID:", editingNoteId);
+      console.log("Updated Notes:", updatedNotes);
+
       setNotes(updatedNotes);
       setEditingNoteId(null);
       setEditText([]);
@@ -85,7 +91,6 @@ const Notes = ({ notes, setNotes }) => {
             startEdit={startEdit} // Pass the startEdit function to begin editing
             isEditing={editingNoteId === note.id}
             handleSaveChanges={handleSaveChanges} // Pass the function to save changes
-
           />
         ))}
         <CreateNote
