@@ -36,7 +36,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Notes notes={notes} setNotes={setNotes} />} />
             {/*<Route path="/create-note" element={<CreateNote />} /> */}
+
             <Route path="/edit-note/:id" element={<EditNote />} />
+            
           </Routes>
         </BrowserRouter>
       </main>
