@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import CreateNote from "./components/NoteComponents/CreateNote";
-import EditNote from "./components/NoteComponents/EditNote";
 import Header from "./components/NoteComponents/Header";
 import Notes from "./components/NoteComponents/Notes";
 
@@ -21,6 +19,11 @@ function App() {
     if (data && data.length > 0) {
       setNotes(data);
     }
+  
+    // Cleanup function that runs after the component is unmounted or before the next effect runs
+    return () => {
+      console.log("Before update:", localStorage.getItem("Notes"));
+    };
   }, []);
 
   useEffect(() => {
@@ -36,8 +39,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Notes notes={notes} setNotes={setNotes} />} />
             {/*<Route path="/create-note" element={<CreateNote />} /> */}
-
-            <Route path="/edit-note/:id" element={<EditNote />} />
+            {/*<Route path="/edit-note/:id" element={<EditNote />} /> */}
             
           </Routes>
         </BrowserRouter>
