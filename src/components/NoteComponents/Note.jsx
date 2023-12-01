@@ -4,18 +4,11 @@ import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined
 import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
 import EditIcon from '@mui/icons-material/Edit';
 
-
 const Note = ({ id, text, deleteNote, startEdit, isEditing, handleSaveChanges }) => {
   const defaultColor = "#fef3bd";
-  const [bgColor, setBgColor] = useState(() => {
-    return localStorage.getItem(`note_${id}_color`) || defaultColor;
-  });
+  const [bgColor, setBgColor] = useState(() => localStorage.getItem(`note_${id}_color`) || defaultColor);
   const [showColorPicker, setShowColorPicker] = useState(false);
-
-  const [editText, setEditText] = useState(() => {
-    const localStorageText = localStorage.getItem(`note_${id}_text`);
-    return localStorageText !== null ? localStorageText : text;
-  });
+  const [editedText, setEditedText] = useState(text);
 
   const handleChangeColor = (color) => {
     setBgColor(color.hex);
@@ -38,30 +31,17 @@ const Note = ({ id, text, deleteNote, startEdit, isEditing, handleSaveChanges })
     "#969696",
   ];
 
-  // storing in localStorage
   useEffect(() => {
-    localStorage.setItem(`note_${id}_color`, bgColor); // save the new color
+    localStorage.setItem(`note_${id}_color`, bgColor);
   }, [id, bgColor]);
 
-  // Use useEffect to handle updates from localStorage when the component mounts
-  useEffect(() => {
-    const localStorageText = localStorage.getItem(`note_${id}_text`);
-    if (localStorageText !== null) {
-      setEditText(localStorageText);
-    }
-  }, []);
+  const handleEditToggle = () => {
+    startEdit(id, text);
+  };
 
-  // storing in localStorage when editing the note or creating the note
-  useEffect(() => {
-    if (isEditing) {
-      localStorage.setItem(`note_${id}_text`, editText); // save the new text when editing
-    } else {
-      const localStorageText = localStorage.getItem(`note_${id}_text`);
-      if (localStorageText !== null) {
-        setEditText(localStorageText);
-      }
-    }
-  }, [id, editText, isEditing]);
+  const handleSaveChangesInternal = () => {
+    handleSaveChanges(id, editedText);
+  };
 
   return (
     <div className="note" style={{ background: bgColor }}>
@@ -70,8 +50,8 @@ const Note = ({ id, text, deleteNote, startEdit, isEditing, handleSaveChanges })
           <textarea
             cols="30"
             rows="8"
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
+            value={editedText}
+            onChange={(e) => setEditedText(e.target.value)}
           />
         ) : (
           text
@@ -91,11 +71,11 @@ const Note = ({ id, text, deleteNote, startEdit, isEditing, handleSaveChanges })
         </button>
 
         {isEditing ? (
-          <button onClick={handleSaveChanges}>Save Changes</button>
+          <button onClick={handleSaveChangesInternal}>Save Changes</button>
         ) : (
           <EditIcon
             className="note_buttons"
-            onClick={() => startEdit(id, text)}
+            onClick={handleEditToggle}
             aria-hidden="true"
             fontSize="medium"
           />
