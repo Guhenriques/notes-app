@@ -5,6 +5,8 @@ import Note from "./Note";
 import CreateNote from "./CreateNote";
 import Search from "./Search";
 
+import { Grid } from "@mui/material";
+
 const Notes = () => {
   const [notes, setNotes] = useState(() => {
     const localStorageNotes = JSON.parse(localStorage.getItem("Notes"));
@@ -15,7 +17,6 @@ const Notes = () => {
   const [searchText, setSearchText] = useState("");
   const [editingNoteId, setEditingNoteId] = useState('');
 
-  // Second useEffect
   useEffect(() => {
     localStorage.setItem("Notes", JSON.stringify(notes));
   }, [notes]);
@@ -23,6 +24,7 @@ const Notes = () => {
   const textHandler = (e) => {
     setInputText(e.target.value);
   };
+
 
   const createNote = () => {
     if (inputText.trim().length > 0) {
@@ -44,7 +46,6 @@ const Notes = () => {
 
   const startEdit = (note) => {
     setEditingNoteId(note.id);
-    setInputText(note.text); // Set the input text to the note's text
   };
 
   const handleSaveChanges = (id, editedText) => {
@@ -74,26 +75,30 @@ const Notes = () => {
     : [];
 
   return (
-    <div className="container">
-      <Search handleSearchNote={setSearchText} />
-      <div className="notes">
-        {filteredNotes.map((note) => (
-          <Note
-            key={note.id}
-            id={note.id}
-            text={note.text}
-            deleteNote={deleteNote}
-            startEdit={() => startEdit(note)}
-            isEditing={editingNoteId === note.id}
-            handleSaveChanges={handleSaveChanges}
+    <div>
+        <Search handleSearchNote={setSearchText} />
+      <Grid container spacing={2}>
+          {filteredNotes.map((note) => (
+            <Grid item xs={6} sm={6} lg={4}>
+              <Note
+                key={note.id}
+                id={note.id}
+                text={note.text}
+                deleteNote={deleteNote}
+                startEdit={() => startEdit(note)}
+                isEditing={editingNoteId === note.id}
+                handleSaveChanges={handleSaveChanges}
+              />
+            </Grid>
+          ))}
+        <Grid item xs={6} sm={6} lg={4}>
+          <CreateNote
+            textHandler={textHandler}
+            saveHandler={createNote}
+            inputText={inputText}
           />
-        ))}
-        <CreateNote
-          textHandler={textHandler}
-          saveHandler={createNote}
-          inputText={inputText}
-        />
-      </div>
+        </Grid>
+      </Grid>
     </div>
   );
 };
