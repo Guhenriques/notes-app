@@ -78,6 +78,7 @@ const Note = ({ id, text, deleteNote, startEdit, isEditing, handleSaveChanges })
             onClick={handleEditToggle}
             aria-hidden="true"
             fontSize="medium"
+            sx={{"&:hover": {cursor: "pointer"} }}
           />
         )}
 
